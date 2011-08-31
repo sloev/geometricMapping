@@ -7,11 +7,12 @@ class triangular {
   }
 
   void display() {
-    fill(100, 100);
+    colorMode(HSB, 100);
+    fill(100, 0, 100);
     beginShape();
-    vertex(dots[p1].x, dots[p1].y,0);
-    vertex(dots[p2].x, dots[p2].y,0);
-    vertex(dots[p3].x, dots[p3].y,0);
+    vertex(dots[p1].x, dots[p1].y, 0);
+    vertex(dots[p2].x, dots[p2].y, 0);
+    vertex(dots[p3].x, dots[p3].y, 0);
     endShape();
   }
 }

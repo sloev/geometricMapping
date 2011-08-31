@@ -28,6 +28,10 @@ rectangular [] rectangulars;
 //for hiding buttons
 int myColorBackground = color(0, 0, 0);
 
+//show dots
+CheckBox checkdots;
+
+int showdots=-1;
 
 void setup() {
   size(400, 400, OPENGL);
@@ -42,36 +46,37 @@ void setup() {
   controlp5 = new ControlP5(this);
 
   //geometric menu
-  radios = controlp5.addRadioButton("radios", 20, 160);
-  radios.setColorForeground(color(120));
-  radios.setColorActive(color(255));
-  radios.setColorLabel(color(255));
-  radios.setSpacingColumn(50);
-  addToRadioButton(radios, "triangular", 1);
-  addToRadioButton(radios, "rectangular", 2);
-  addToRadioButton(radios, "polygon", 3);
+  radios = controlp5.addRadioButton("radios", 20, 40);
+
+  addToRadioButton(radios, "triangles", 1);
+  addToRadioButton(radios, "rectangles", 2);
 
   //saving field
-  myTextfield = controlp5.addTextfield("texting", 160, 100, 200, 20);
+  myTextfield = controlp5.addTextfield("", 20, 100, 100, 20);
   myTextfield.setFocus(false);
   myTextfield.setAutoClear(false);
   myTextfield.keepFocus(false);
-  myTextfield.setText("write savename and enter");
+  myTextfield.setText("savename");
+
+  //checkboxes dots
+  checkdots = controlp5.addCheckBox("showDots", 20, 20);
+  checkdots.addItem("hide dots", 0);
 
   //loading dropdown
-  p1 = controlp5.addDropdownList("P1", 100, 100, 100, 120);
+  p1 = controlp5.addDropdownList("P1", 20, 90, 100, 120);
   customize(p1);
 }
 
 void draw() {
   colorMode(RGB, 255);
   background(myColorBackground);
-
-  for (int i=0;i<dots.length;i++) {
-    dots[i].check();
-  }
-  for (int i=0;i<dots.length;i++) {
-    dots[i].update();
+  if ((int)checkdots.arrayValue()[0]==0) {
+    for (int i=0;i<dots.length;i++) {
+      dots[i].check();
+    }
+    for (int i=0;i<dots.length;i++) {
+      dots[i].update();
+    }
   }
   for (int i=0;i<triangulars.length;i++) {
     triangulars[i].display();
@@ -211,12 +216,6 @@ void loading(String loadname) {
   int form=1;
 
   for (int i=0;i < lines.length;i++) {
-    /*if (lines[i].equals("\n")) {
-     form++;
-     }
-     else {
-     switch(form) {
-     case 1:*/
     String[] pieces = split(lines[i], ',');
     println(pieces);
     if (pieces.length == 9) {
@@ -232,10 +231,6 @@ void loading(String loadname) {
       triangulars = (triangular [] ) expand(triangulars, triangulars.length+1);
       triangulars[triangulars.length-1]=new triangular(dots.length-3, dots.length-2, dots.length-1);
     }
-    //break;
-    //case 2:
-    //String[] pieces2 = split(lines[i], ',');
-    //println(pieces2);
     else if (pieces.length == 12) {
       dots =(dot []) expand(dots, dots.length+1);
       dots[dots.length-1]=new dot(Integer.parseInt(pieces[1]), Integer.parseInt(pieces[2]), 10, dots.length-1);
@@ -252,9 +247,6 @@ void loading(String loadname) {
       rectangulars = (rectangular [] ) expand(rectangulars, rectangulars.length+1);
       rectangulars[rectangulars.length-1]=new rectangular(dots.length-4, dots.length-3, dots.length-2, dots.length-1);
     }
-    //break;
-    //}
-    // }
   }
 }
 
