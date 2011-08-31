@@ -34,7 +34,7 @@ CheckBox checkdots;
 int showdots=-1;
 
 void setup() {
-  size(400, 400, OPENGL);
+  size(800, 500, OPENGL);
   smooth();
 
   //init of my geometric arrays
@@ -70,6 +70,14 @@ void setup() {
 void draw() {
   colorMode(RGB, 255);
   background(myColorBackground);
+
+  for (int i=0;i<triangulars.length;i++) {
+    triangulars[i].display();
+  }
+  for (int i=0;i<rectangulars.length;i++) {
+    rectangulars[i].display();
+  }
+
   if ((int)checkdots.arrayValue()[0]==0) {
     for (int i=0;i<dots.length;i++) {
       dots[i].check();
@@ -77,12 +85,6 @@ void draw() {
     for (int i=0;i<dots.length;i++) {
       dots[i].update();
     }
-  }
-  for (int i=0;i<triangulars.length;i++) {
-    triangulars[i].display();
-  }
-  for (int i=0;i<rectangulars.length;i++) {
-    rectangulars[i].display();
   }
 }
 
@@ -190,7 +192,7 @@ void controlEvent(ControlEvent theEvent) {
   if (theEvent.isGroup()) {
     // check if the Event was triggered from a ControlGroup
     if (theEvent.group().name().equals("P1")) {
-      println("loading "+theEvent.group().stringValue()+" config file");
+      //println("loading "+theEvent.group().stringValue()+" config file");
       loading(theEvent.group().stringValue());
     }
   } 
@@ -217,7 +219,7 @@ void loading(String loadname) {
 
   for (int i=0;i < lines.length;i++) {
     String[] pieces = split(lines[i], ',');
-    println(pieces);
+    //println(pieces);
     if (pieces.length == 9) {
       dots =(dot []) expand(dots, dots.length+1);
       dots[dots.length-1]=new dot(Integer.parseInt(pieces[1]), Integer.parseInt(pieces[2]), 10, dots.length-1);
