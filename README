@@ -1,0 +1,12 @@
+geometricMapping
+a processing 1.5 sketch
+
+uses libraries:
+controlp5 newest
+gsvideo newest test version
+opengl
+
+geometricMapping lets you create triangles and rectangles to fit on existing sculptures in the real world and thereby easily create augmented sculptures.
+ your saved configs are in the data folder and the videos should be in a videos folder.
+
+
