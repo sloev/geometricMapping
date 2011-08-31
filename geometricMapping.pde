@@ -1,5 +1,9 @@
 import controlP5.*;
 import processing.opengl.*;
+import codeanticode.gsvideo.*;
+
+//gsvideo stuff
+GSMovie [] movie;
 
 ControlP5 controlp5;
 
@@ -65,6 +69,12 @@ void setup() {
   //loading dropdown
   p1 = controlp5.addDropdownList("P1", 20, 90, 100, 120);
   customize(p1);
+
+  initvideos();
+}
+
+void movieEvent(GSMovie movie) {
+  movie.read();
 }
 
 void draw() {
@@ -150,8 +160,26 @@ void mousePressed() {
   }
 }
 
+//init videoarray
+void initvideos() {
+  println("loading videos");
+  //make list of saved files in data directory
+  String path = sketchPath+"/videos/";
+  String[] filenamesdata = listFileNames(path);
+
+  movie = new GSMovie[filenamesdata.length];
+
+  //add all the previous saved files
+  println(filenamesdata);
+  for (int i=0;i<filenamesdata.length;i++) {
+    movie[i] = new GSMovie(this, path+filenamesdata[i]);
+    movie[i].loop();
+  }
+}
+
 //costomize the dropdown
 void customize(DropdownList ddl) {
+  println("making dropdown menu");
   //make list of saved files in data directory
   String path = sketchPath;
   String[] filenamesdata = listFileNames(path+"/data/");
@@ -208,6 +236,7 @@ void controlEvent(ControlEvent theEvent) {
 
 //the loading mechanism
 void loading(String loadname) {
+  println("loading "+loadname);
   //init all geometric arrays
   dots = new dot[0];
   triangulars = new triangular[0];
@@ -253,6 +282,7 @@ void loading(String loadname) {
 }
 
 void saving(String savename) {
+  println("saving "+savename);
   String[] tri = new String[triangulars.length];
   for (int i = 0; i < triangulars.length; i++) {
     tri[i] = triangulars[i].p1+","+dots[triangulars[i].p1].x+","+dots[triangulars[i].p1].y+","+
